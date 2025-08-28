@@ -1,11 +1,21 @@
-import { Button } from "./components/ui/button"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Layout from "./components/Layout"
+import { ThemeProvider } from "./context/theme-provider"
+import Dashboard from "./pages/dashboard"
+import CityPage from "./pages/city-page"
 
 function App() {
   return (
-    <>
-      <div>Hello Weather App.</div>
-      <Button className="ml-10" variant='destructive'>Choke Me</Button>
-    </>
+    <BrowserRouter>
+      <ThemeProvider defaultTheme="dark">
+        <Layout>
+          <Routes>
+            <Route index element={<Dashboard />} />
+            <Route path="city/:city" element={<CityPage />} />
+          </Routes>
+        </Layout>
+      </ThemeProvider>
+    </BrowserRouter>
   )
 }
 
