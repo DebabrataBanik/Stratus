@@ -15,7 +15,7 @@ function Header() {
         </Link>
 
         <div>
-          <div onClick={() => setTheme(isDark ? 'light' : 'dark')}
+          <button onClick={() => setTheme(isDark ? 'light' : 'dark')}
             className={`flex items-center cursor-pointer transition-transform duration-500 ${isDark ? 'rotate-180' : 'rotate-0'}`}  
           >
             {
@@ -26,7 +26,7 @@ function Header() {
                 <Moon className="h-6 w-6"/>
               )
             }
-          </div>
+          </button>
         </div>
       </div>
     </header>
