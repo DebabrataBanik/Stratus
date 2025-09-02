@@ -1,19 +1,24 @@
+import CurrentWeather from "@/components/CurrentWeather";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button"
-import useGeolocation from "@/hooks/use-geolocation"
+import { useGeolocation } from "@/hooks/use-geolocation"
+import { useReverseGeocodeQuery, useWeatherQuery, useForecastQuery } from "@/hooks/use-query";
 import { AlertTriangle, MapPin, RefreshCw } from "lucide-react"
 
 function Dashboard() {
 
   const { coordinates, error: locationError , isLoading: locationLoading, getLocation } = useGeolocation();
 
-  console.log('Coordinates', coordinates)
+  const weather = useWeatherQuery(coordinates);
+  const forecast = useForecastQuery(coordinates);
+  const location = useReverseGeocodeQuery(coordinates)
 
   const handleRefresh = () => {
-    getLocation()
     if(coordinates){
-      // 
+      weather.refetch()
+      forecast.refetch()
+      location.refetch()
     }
   }
 
@@ -37,8 +42,30 @@ function Dashboard() {
     )
   }
 
+  const locationName = location.data?.[0]
+
+  if(weather.error || forecast.error ){
+    return (
+      <Alert variant='destructive' >
+        <AlertTriangle className="w-4 h-4" />
+        <AlertTitle>Error</AlertTitle>
+        <AlertDescription className="flex flex-col gap-4">
+          <p>Failed to fetch weather data. Please refresh again.</p>
+          <Button onClick={handleRefresh} variant='outline' className="w-fit cursor-pointer" >
+            <RefreshCw className="mr-2 h-4 w-4" />
+            Retry
+          </Button>
+        </AlertDescription>
+      </Alert>
+    )
+  }
+
+  if(!weather.data || !forecast.data ){
+    return <LoadingSkeleton />
+  }
+
   return (
-    <div className="space-x-4">
+    <div className="space-y-4">
       {/* Favorite Cities */}
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold tracking-tight">My Location</h1>
@@ -47,13 +74,22 @@ function Dashboard() {
           size={'icon'}
           className="cursor-pointer"
           onClick={handleRefresh}
-          // disabled={}
+          disabled={weather.isFetching || forecast.isFetching}
         >
-          <RefreshCw className="h-4 w-4" />
+          <RefreshCw className={`h-4 w-4 ${weather.isFetching ? 'animate-spin' : ''}`} />
         </Button>
       </div>
 
-      {/* Current and hourly forecast */}
+      <div className="grid gap-6">
+        <div className="flex flex-col lg:flex-row gap-4">
+          <CurrentWeather data={weather.data} locationName={locationName} />
+          
+        </div>
+        
+        <div>
+          
+        </div>
+      </div>
     </div>
   )
 }
