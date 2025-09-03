@@ -22,52 +22,51 @@ export const useGeolocation = () => {
     }))
 
     if(!navigator.geolocation){
-      setLocationData(prev => ({
-        ...prev,
+      setLocationData({
+        coordinates: null,
         error: 'Geolocation is not supported by your browser.',
         isLoading: false,
-      }))
+      })
       return
     }
 
     navigator.geolocation.getCurrentPosition(pos => {
-      setLocationData(prev => ({
-        ...prev,
+      setLocationData({
         coordinates: {
           lat: pos.coords.latitude,
           lon: pos.coords.longitude,
         },
         error: null,
         isLoading: false
-      }))
+      })
     }, 
     (err) => {
       let errMsg: string;
 
       switch (err.code) {
-        case err.PERMISSION_DENIED:
+        case GeolocationPositionError.PERMISSION_DENIED:
           errMsg = "Location permission denied. Please enable location access.";
           break;
-        case err.POSITION_UNAVAILABLE:
+        case GeolocationPositionError.POSITION_UNAVAILABLE:
           errMsg = "Location information is unavailable.";
           break;
-        case err.TIMEOUT:
+        case GeolocationPositionError.TIMEOUT:
           errMsg = "Location request timed out.";
           break;
         default:
           errMsg = "An unknown error occurred.";
       }
 
-      setLocationData(prev => ({
-        ...prev,
+      setLocationData({
+        coordinates: null,
         error: errMsg,
         isLoading: false
-      }))
+      })
     }, {
       enableHighAccuracy: true,
       maximumAge: 0
     }
-  )
+    )
   }
 
   useEffect(() => {

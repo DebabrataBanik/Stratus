@@ -42,6 +42,22 @@ function Dashboard() {
     )
   }
 
+  if (!coordinates) {
+    return (
+      <Alert>
+        <MapPin className="h-4 w-4" />
+        <AlertTitle>Location Required</AlertTitle>
+        <AlertDescription className="flex flex-col gap-4">
+          <p>Please enable location access to see your local weather.</p>
+          <Button variant="outline" onClick={getLocation} className="w-fit">
+            <MapPin className="mr-2 h-4 w-4" />
+            Enable Location
+          </Button>
+        </AlertDescription>
+      </Alert>
+    );
+  }
+
   const locationName = location.data?.[0]
 
   if(weather.error || forecast.error ){
