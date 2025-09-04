@@ -70,7 +70,7 @@ const SearchLocation = () => {
           className="scrollbar scrollbar-track-transparent dark:scrollbar-thumb-accent scrollbar-thumb-muted-foreground"
         > 
           {
-            query.length > 2 && !isLoading && 
+            query.length > 3 && !isLoading && 
             <CommandEmpty>No results found.</CommandEmpty>
           }
           <CommandGroup heading='Favorites'>
