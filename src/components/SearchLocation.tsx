@@ -51,7 +51,7 @@ const SearchLocation = () => {
         className="relative w-full justify-start text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64"
         onClick={() => setOpen(true)}>
         <Search className="w-4 h-4 mr-2" />  
-        Search cities ...
+        Search cities
         <kbd className="pointer-events-none select-none ml-auto text-xs self-end">
           <span className="border px-1 bg-secondary rounded tracking-normal">Ctrl</span> <span className="border px-1 bg-secondary rounded">K</span>
         </kbd>
@@ -61,7 +61,7 @@ const SearchLocation = () => {
 
       <CommandDialog open={open} onOpenChange={setOpen}>
         <CommandInput 
-          placeholder="Search cities..."
+          placeholder="Search cities"
           value={query}
           onValueChange={setQuery}
           className="pl-2"
@@ -73,9 +73,9 @@ const SearchLocation = () => {
             query.length > 3 && !isLoading && 
             <CommandEmpty>No results found.</CommandEmpty>
           }
-          <CommandGroup heading='Favorites'>
+          {/* <CommandGroup heading='Favorites'>
             <CommandItem>Item 1</CommandItem>
-          </CommandGroup>
+          </CommandGroup> */}
 
 
           {

@@ -5,6 +5,7 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { AlertTriangle } from "lucide-react";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import CurrentWeather from "@/components/CurrentWeather";
+import FavoriteButton from "@/components/FavoriteButton";
 
 function CityWeatherPage() {
 
@@ -39,7 +40,7 @@ function CityWeatherPage() {
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold tracking-tight">{params.city}, <span className="text-muted-foreground text-xl">{weather.data.sys.country}</span></h1>
         <div>
-          {/* Fav it */}
+          <FavoriteButton data={{...weather.data, name: params.city}} />
         </div>
       </div>
 
