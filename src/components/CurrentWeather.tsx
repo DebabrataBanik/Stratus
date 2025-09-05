@@ -1,6 +1,6 @@
 import type { WeatherData, GeocodingResponse } from "@/api/types"
 import { Card, CardContent } from "./ui/card";
-import { Droplets, Wind } from "lucide-react";
+import { Droplets, MoveDownIcon, MoveUpIcon, Wind } from "lucide-react";
 
 interface CurrentWeatherProps {
   data: WeatherData;
@@ -18,29 +18,45 @@ function CurrentWeather({ data, locationName }: CurrentWeatherProps) {
   return (
     <div>
       <Card className="overflow-hidden">
-        <CardContent className="p-6">
+        <CardContent className="p-6 pl-10">
           <div className="grid grid-cols-6 md:grid-cols-2">
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <div className="flex items-baseline">
-                  <h2 className="text-2xl font-bold tracking-tight">{locationName?.name}</h2>
-                  {
-                    locationName?.state && 
-                    <span className="text-muted-foreground">, {locationName?.state}</span>
-                  }
+            <div className="space-y-4 flex flex-col justify-evenly">
+              {
+                locationName && 
+                <div className="space-y-2">
+                  <div className="flex items-baseline">
+                    <h2 className="text-2xl font-bold tracking-tight">{locationName?.name}</h2>
+                    {
+                      locationName?.state && 
+                      <span className="text-muted-foreground">, {locationName?.state}</span>
+                    }
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    {locationName?.country}
+                  </p>
                 </div>
-                <p className="text-sm text-muted-foreground">
-                  {locationName?.country}
-                </p>
-              </div>
+              }
               <div className="flex items-center gap-2">
                 <p className="text-7xl font-bold tracking-tighter">
                   {Math.round(temp)}°
                 </p>
-                <div className="space-y-1">
-                  <p className="text-sm text-muted-foreground">
-                    Feels like {Math.round(feels_like)}°</p>
+                <div className="ml-2 flex flex-col gap-2">
+                  <div className="space-y-1">
+                    <p className="text-sm text-muted-foreground">
+                      Feels like {Math.round(feels_like)}°</p>
+                  </div>
+                  <div className="text-sm flex items-center gap-2">
+                    <p className="flex items-center gap-1">
+                      <MoveUpIcon size={10} color="red"/>
+                      {Math.round(temp_max)}°
+                    </p>
+                    <p className="flex items-center gap-1">
+                      <MoveDownIcon size={10} color="blue" />
+                      {Math.round(temp_min)}°
+                    </p>
+                  </div>
                 </div>
+                
               </div>
 
               <div className="grid grid-cols-2 gap-4">

@@ -1,4 +1,3 @@
-import type { Coordinates } from "@/api/types";
 import { useForecastQuery, useWeatherQuery } from "@/hooks/use-query";
 import { useParams, useSearchParams } from "react-router-dom"
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
@@ -6,6 +5,9 @@ import { AlertTriangle } from "lucide-react";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import CurrentWeather from "@/components/CurrentWeather";
 import FavoriteButton from "@/components/FavoriteButton";
+import WeatherDetails from "@/components/WeatherDetails";
+import HourlyTemp from "@/components/HourlyTemp";
+import WeatherForecast from "@/components/WeatherForecast";
 
 function CityWeatherPage() {
 
@@ -45,13 +47,14 @@ function CityWeatherPage() {
       </div>
 
       <div className="grid gap-6">
-        <div className="flex flex-col lg:flex-row gap-4">
+        <div className="flex flex-col lg:flex-row items-center gap-20">
           <CurrentWeather data={weather.data} />
-          
+          <HourlyTemp data={forecast.data} />
         </div>
         
-        <div>
-          
+        <div className="grid gap-6 md:grid-cols-2 items-start">
+          <WeatherDetails data={weather.data} />
+          <WeatherForecast data={forecast.data} />
         </div>
       </div>
     </div>

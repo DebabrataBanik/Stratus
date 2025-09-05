@@ -1,8 +1,11 @@
 import CurrentWeather from "@/components/CurrentWeather";
 import FavoriteCities from "@/components/FavoriteCities";
+import HourlyTemp from "@/components/HourlyTemp";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button"
+import WeatherDetails from "@/components/WeatherDetails";
+import WeatherForecast from "@/components/WeatherForecast";
 import { useGeolocation } from "@/hooks/use-geolocation"
 import { useReverseGeocodeQuery, useWeatherQuery, useForecastQuery } from "@/hooks/use-query";
 import { AlertTriangle, MapPin, RefreshCw } from "lucide-react"
@@ -98,13 +101,14 @@ function Dashboard() {
       </div>
 
       <div className="grid gap-6">
-        <div className="flex flex-col lg:flex-row gap-4">
+        <div className="flex flex-col lg:flex-row items-center gap-20">
           <CurrentWeather data={weather.data} locationName={locationName} />
-          
+          <HourlyTemp data={forecast.data} />
         </div>
         
-        <div>
-          
+        <div className="grid gap-6 md:grid-cols-2 items-start">
+          <WeatherDetails data={weather.data} />
+          <WeatherForecast data={forecast.data} />
         </div>
       </div>
     </div>
