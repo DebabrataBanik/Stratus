@@ -59,7 +59,7 @@ function FavoriteCityComponent({ id, name, lat, lon, onRemove}: FavoriteCityProp
           toast.error(`Removed ${name} from favorites.`)
         }}
       >
-        <X className="w-4-h-4" />
+        <X className="w-4 h-4" />
       </Button>
 
       {
